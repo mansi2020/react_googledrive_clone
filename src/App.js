@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+
+import "./App.css";
+import Drivepage from "./Components/Drivepage/Drivepage";
+import Home from "./Components/Home/Home";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ContextProvider from "./Context/ContextProvider"; //context
 
 function App() {
+  // router
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/drivepage",
+      element: <Drivepage />,
+    },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <ContextProvider>
+        <RouterProvider router={router} />
+      </ContextProvider>
     </div>
   );
 }

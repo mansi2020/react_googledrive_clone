@@ -1,0 +1,30 @@
+/* data container */
+.data-main-container{
+    background-color: white;
+}
+.data-top-container{
+    display:flex;
+    justify-content: space-between;
+    width:calc(100vw - 250px)
+}
+.right-data-header{
+    display:flex;
+}
+
+/* data-info-heading */
+.data-info-heading{
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+    border-bottom: 1px solid black;
+}
+.data-info-heading>p{
+    flex:3
+}
+.data-info-heading>p:first-child{
+    flex:8
+}
+.data-info-heading>p:nth-child(4){
+    flex:2
+}
+
