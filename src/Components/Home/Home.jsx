@@ -13,10 +13,10 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"; //
 import { useNavigate } from "react-router-dom"; //navigation hook
 
 const Home = () => {
-  // navigate hook
+  // navigate hook-----------------------------------
   const navigate = useNavigate();
 
-  // auth sign in
+  // auth sign in-------------------------------------------
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   const signIn = () => {
@@ -40,7 +40,6 @@ const Home = () => {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   };
 
@@ -236,7 +235,9 @@ const Home = () => {
       <footer className="footer-container">
         <div className="footer-top">
           <div className="footer-top-left">
-            <p>Follow our <span style={{color:"blue"}}>Blog</span></p>
+            <p>
+              Follow our <span style={{ color: "blue" }}>Blog</span>
+            </p>
             <YouTubeIcon />
             <TwitterIcon />
             <FacebookIcon />
@@ -252,7 +253,7 @@ const Home = () => {
             <li>Terms</li>
           </ul>
           <ul className="footr-bottom-right">
-            <p>
+            <p className="footer-help-icon">
               <HelpIcon />
               <span>Help</span>
             </p>

@@ -1,4 +1,4 @@
-import { useEffect, useState,useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./Sidebar.css";
 import MobileScreenShareOutlinedIcon from "@mui/icons-material/MobileScreenShareOutlined";
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
@@ -9,22 +9,21 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import AddIcon from "@mui/icons-material/Add";
 
-// modal functionality-----------
+// modal functionality
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 // storage firebase
-import {storage,db} from "./../../firebase"
-import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { storage, db } from "./../../firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // context api data
 import { useOfContext } from "../../Context/ContextProvider";
- 
+
 //date formate
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 const Sidebar = () => {
   // modal style---------------------
@@ -35,71 +34,66 @@ const Sidebar = () => {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "white",
-    // border: '2px solid #000',
-    // boxShadow: 24,
     p: 4,
   };
 
-//useref
-const fileInputRef = useRef(null);
+  //useref-----------------------------
+  const fileInputRef = useRef(null);
 
-  //   usestate---------------
-  
+  //usestate-----------------------------------
   const [open, setOpen] = useState(false);
-  const [uploading,setUploading] = useState(false);
-  const [file,setFile] = useState(null);
-  const [fileList,setFileList] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [file, setFile] = useState(null);
 
-  // context data
+  // context data--------------------------------
   const dataCtx = useOfContext();
 
-//   modal handle function
+  //modal handle function-----------------------------------
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-//   file handle
-const  onChangeHandleFile = (e)=>{
-    if(fileInputRef.current.files[0]){
-        setFile(fileInputRef.current.files[0]);
-        
+  //file handle---------------------------------
+  const onChangeHandleFile = (e) => {
+    if (fileInputRef.current.files[0]) {
+      setFile(fileInputRef.current.files[0]);
     }
-}
-console.log(file);
+  };
 
-const handleUploadedFile = (e) => {
-  e.preventDefault();
-  setUploading(true);
-  if (fileInputRef.current.files[0] == null) return;
+  // handle upload file when click on submit button
+  const handleUploadedFile = (e) => {
+    e.preventDefault();
+    setUploading(true);
+    if (fileInputRef.current.files[0] == null) return;
 
-  const fileRef = ref(storage, `files/${file.name}`);
-  uploadBytes(fileRef, fileInputRef.current.files[0])
-    .then((snapshot) => {
-      console.log(snapshot);
-      getDownloadURL(fileRef).then((url) => {
-        setDoc(doc(collection(db, 'myfiles')), {
-          timestamp: format(new Date(),'MM-dd-yyyy HH:mm:ss'),
-          filename: file.name,
-          fileURL: url,
-          size: snapshot.metadata.size
-        });
+    const fileRef = ref(storage, `files/${file.name}`);
+    uploadBytes(fileRef, fileInputRef.current.files[0])
+      .then((snapshot) => {
+        console.log(snapshot);
+        getDownloadURL(fileRef)
+          .then((url) => {
+            setDoc(doc(collection(db, "myfiles")), {
+              timestamp: format(new Date(), "MM-dd-yyyy HH:mm:ss"),
+              filename: file.name,
+              fileURL: url,
+              size: snapshot.metadata.size,
+            });
+          })
+          .catch((error) => {
+            console.error("Error uploading file:", error);
+            // Handle the error, display a message to the user, or take appropriate action
+          });
       })
       .catch((error) => {
-        console.error("Error uploading file:", error);
+        console.error("Error uploading bytes:", error);
         // Handle the error, display a message to the user, or take appropriate action
+      })
+      .finally(() => {
+        dataCtx.setUploadFileStatus((prevState) => !prevState);
+        setUploading(false);
+        setFile(null);
+        setOpen(false);
       });
-    })
-    .catch((error) => {
-      console.error("Error uploading bytes:", error);
-      // Handle the error, display a message to the user, or take appropriate action
-    })
-    .finally(() => {
-      dataCtx.setUploadFileStatus((prevState)=>!prevState);
-      setUploading(false);
-      setFile(null);
-      setOpen(false);
-      
-    });
-};
+  };
 
   return (
     <>
@@ -108,7 +102,7 @@ const handleUploadedFile = (e) => {
           <AddIcon />
           New
         </button>
-        
+
         {/* modal */}
         <Modal
           keepMounted
@@ -118,25 +112,42 @@ const handleUploadedFile = (e) => {
           aria-describedby="keep-mounted-modal-description"
         >
           <Box sx={style}>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h2"
-            >
-              Text in a modal
-            </Typography>
+            <Typography></Typography>
             <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-              <form action="" >
-                <h3>Select file you want to upload</h3>
-                {uploading ? <p>loading...</p> : <><input type="file" onChange={onChangeHandleFile} ref={fileInputRef}/>
-                <button onClick={handleUploadedFile} >Submit</button></>}
-                
+              <form action="" className="sidebar-form">
+                <h3 style={{ marginBottom: "10px", textAlign: "center" }}>
+                  Select file you want to upload
+                </h3>
+                {uploading ? (
+                  <p style={{ textAlign: "center" }}>Loading...</p>
+                ) : (
+                  <>
+                    <input
+                      type="file"
+                      onChange={onChangeHandleFile}
+                      ref={fileInputRef}
+                    />
+                    <button
+                      onClick={handleUploadedFile}
+                      className="sidebar-submit-btn"
+                      style={{
+                        display: "block",
+                        marginTop: "20px",
+                        width: "100%",
+                        padding: "6px 15px",
+                        backgroundColor: "rgb(52,168,83)",
+                      }}
+                    >
+                      Submit
+                    </button>
+                  </>
+                )}
               </form>
             </Typography>
           </Box>
         </Modal>
         <div className="sidebar-options">
-          <div className="sidebar-option">
+          <div className="sidebar-option sidebar-option-first">
             <MobileScreenShareOutlinedIcon />
             <span>My Drive</span>
           </div>
@@ -165,8 +176,8 @@ const handleUploadedFile = (e) => {
               <CloudQueueIcon />
               <span>Storage</span>
             </div>
-            <input type="range" value="50%" />
-            <p>106 GB of 200 GB used</p>
+            <input type="range" value="10%" />
+            <p>1 GB of 200 GB used</p>
           </div>
         </div>
       </div>
