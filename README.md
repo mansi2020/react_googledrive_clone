@@ -1,3 +1,27 @@
+# UI of Project
+![Screenshot (73)](https://github.com/mansi2020/react_googledrive_clone/assets/57188328/1eb63812-eb08-434f-a151-cd0e34b9a5d1)
+
+![Screenshot (74)](https://github.com/mansi2020/react_googledrive_clone/assets/57188328/b7873c68-eb3b-4350-8466-5cb21b8f7512)
+
+
+<h1>OneDrive Clone with Firebase Authentication and Realtime Database</h1>
+# Introduction
+This project is a clone of OneDrive, a cloud storage service, implemented using Firebase Authentication for user authentication and Firebase Realtime Database for storing metadata of files and folders. It provides functionalities such as uploading files, organizing them into folders, searching for files and folders, downloading files, and deleting files.
+
+# Features
+Firebase Authentication: Users can sign up and log in securely using Firebase Authentication.
+Realtime Database: Firebase Realtime Database is used to store metadata of files and folders, enabling real-time synchronization across multiple devices.
+File Upload: Users can upload files to the cloud storage.
+Folder Management: Users can create folders to organize their files.
+Search: The search functionality allows users to search for files and folders based on their names.
+Download: Users can download files from the cloud storage to their local devices.
+Delete: Users can delete files and folders from the cloud storage.
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
