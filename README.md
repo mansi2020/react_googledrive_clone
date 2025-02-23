@@ -1,5 +1,7 @@
-# UI of Project
+![image](https://github.com/user-attachments/assets/efbbc1cc-3ee7-4869-afe3-1559bb9f7243)# UI of Project
 ![Screenshot (73)](https://github.com/mansi2020/react_googledrive_clone/assets/57188328/1eb63812-eb08-434f-a151-cd0e34b9a5d1)
+
+![image](https://github.com/user-attachments/assets/833bbaec-985c-42d8-bebf-ca31287e7e8f)
 
 ![Screenshot (74)](https://github.com/mansi2020/react_googledrive_clone/assets/57188328/b7873c68-eb3b-4350-8466-5cb21b8f7512)
 
